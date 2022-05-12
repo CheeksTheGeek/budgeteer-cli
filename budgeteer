@@ -73,4 +73,100 @@ edit_budget_settings() {
     echo "-----------------------------------------------------"
 }
 
+# write a function that displays the user's accounts and their balances
+see_accounts() {
+    echo "Here are your current accounts and balances:"
+    echo "-----------------------------------------------------"
+    echo "Account Type | Account Name | Balance"
+    cat accounts.txt
+    echo "-----------------------------------------------------"
+    # ask user if they want to add another account or change the details of an existing account, go to the main menu, or exit
+    echo "What do you want to do next?"
+    echo "1. Add another account"
+    echo "2. Change the details of an existing account"
+    echo "3. Go back to the main menu"
+    echo "4. Exit Budgeteer!"
+    read -p "Enter your choice: " choice
+    case $choice in
+        1) add_account;;
+        2) change_account;;
+        3) main_menu;;
+        4) exit;;
+        *) echo "Invalid choice" && see_accounts;;
+    esac
+}
+
+# write a function that asks the user to enter the nickname of the account, the type of the account.
+add_account() {
+    # ask the user to enter what type of account they want to add. The user can enter either checking, savings, or credit card
+    echo "What type of account would you like to add?"
+    echo "1. Checking"
+    echo "2. Savings"
+    echo "3. Credit Card"
+    read -p "Enter your choice: " choice
+    case $choice in
+        1) add_checking;;
+        2) add_savings;;
+        3) add_credit_card;;
+        *) echo "Invalid choice" && add_account;;
+    esac 
+}
+
+add_credit_card() {
+    read -p "Enter the nickname of the credit card: " nickname
+    read -p "Enter the credit limit available for this account: " limit
+    echo "Credit Card, $nickname, $limit" >> accounts.txt
+    echo "You added Cobalt Credit Card, with a monthly spending limit of $limit to your Budgeteer!"
+    # ask user if they want to add another account or change the details of an existing account, go to the main menu, or exit
+    echo "What do you want to do next?"
+    echo "1. Add another account"
+    echo "2. Change the details of an existing account"
+    echo "3. Go back to the main menu"
+    echo "4. Exit Budgeteer!"
+    read -p "Enter your choice: " choice
+    case $choice in
+        1) add_account;;
+        2) change_account;;
+        3) main_menu;;
+        4) exit;;
+        *) echo "Invalid choice" && add_account;;
+    esac
+}
+
+# write a function that lists all the accounts with digits before the list and then asks user the nickname of the account whose details they want to change
+change_account() {
+    echo "Here are your current accounts and balances:"
+    echo "-----------------------------------------------------"
+    echo "Account Type | Account Name | Balance"
+    cat accounts.txt
+    echo "-----------------------------------------------------"
+    read -p "Enter the nickname of the account you want to change: " nickname
+    # ask user what they want to change
+    echo "What would you like to change?"
+    echo "1. Nickname"
+    echo "2. Balance"
+    read -p "Enter your choice: " choice
+    case $choice in
+        1) change_nickname $nickname;;
+        2) change_balance $nickname;;
+        *) echo "Invalid choice" && change_account;;
+    esac
+}
+
+# write a function that changes the nickname of the account
+change_nickname() {
+    read -p "Enter the new nickname: " new_nickname
+    echo "You changed the nickname of $1 to $new_nickname!"
+    sed -i'.bak' "s/$1/$new_nickname/g" accounts.txt
+    change_account
+}
+
+# write a function that changes the balance of the account
+change_balance() {
+    arg1=$1
+    read -p "Enter the new balance: " new_balance
+    sed -i "s/$1/$new_balance/g" accounts.txt
+    echo "You changed the balance of $1 to $new_balance!"
+    change_account
+}
 main_menu
