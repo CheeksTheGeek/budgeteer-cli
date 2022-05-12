@@ -1,0 +1,76 @@
+#!/bin/bash
+
+echo "Budgeteer! Another good day to track your expenses and have a stable lifestyle!"
+
+# write a function for main menu that asks the user if they want to add a new expense, see their monthly budget, or edit their budgeting information.
+
+main_menu() {
+  echo "What would you like to do?"
+    echo "1. Add a new expense"
+    echo "2. See your monthly budget"
+    echo "3. Edit your budgeting information"
+    echo "4. See your accounts and their balances"
+    echo "5. Exit"
+    read -p "Enter your choice: " choice
+    case $choice in
+        1) add_expense;;
+        2) see_budget;;
+        3) edit_budget_settings;;
+        4) see_accounts;;
+        5) exit;;
+        *) echo "Invalid choice" && main_menu;;
+    esac
+}
+# write a function that asks the user to enter the name of the expense, the amount, and the date.
+add_expense() {
+    read -p "Enter the name of the expense: " name
+    read -p "Enter the amount of the expense: " amount
+    read -p "Enter the date of the expense (type in DD/MM/YYYY): " date
+    echo "$name, $amount, $date" >> expenses.txt
+    # ask user if they want to add another expense, go to the main menu, or exit
+    echo "What do you want to do next?"
+    echo "1. Add another expense"
+    echo "2. Go back to the main menu"
+    echo "3. Exit Budgeteer!"
+    read -p "Enter your choice: " choice
+    case $choice in
+        1) add_expense;;
+        2) main_menu;;
+        3) exit;;
+        *) echo "Invalid choice" && add_expense;;
+    esac
+}
+
+# write a function that displays the user's monthly budget
+see_budget() {
+    echo "Here is your monthly budget:"
+    echo "-----------------------------------------------------"
+    echo "Expense Name | Amount | Date"
+    echo "-----------------------------------------------------"
+    cat expenses.txt
+    echo "-----------------------------------------------------"
+    # ask user if they want to add another expense, go to the main menu, or exit
+    echo "What do you want to do next?"
+    echo "1. Add another expense"
+    echo "2. Go back to the main menu"
+    echo "3. Exit Budgeteer!"
+    read -p "Enter your choice: " choice
+    case $choice in
+        1) add_expense;;
+        2) main_menu;;
+        3) exit;;
+        *) echo "Invalid choice" && see_budget;;
+    esac
+}
+
+# write a function that changes the user's budgeting information
+edit_budget_settings() {
+    echo "Here are your current budget settings:"
+    echo "-----------------------------------------------------"
+    echo "Budget Name | Amount"
+    echo "-----------------------------------------------------"
+    cat budget.txt
+    echo "-----------------------------------------------------"
+}
+
+main_menu
