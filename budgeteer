@@ -26,7 +26,7 @@ add_expense() {
     read -p "Enter the name of the expense: " name
     read -p "Enter the amount of the expense: " amount
     read -p "Enter the date of the expense (type in DD/MM/YYYY): " date
-    echo "$name, $amount, $date" >> expenses.txt
+    echo "$name, $amount, $date" >> expenses.csv
     # ask user if they want to add another expense, go to the main menu, or exit
     echo "What do you want to do next?"
     echo "1. Add another expense"
@@ -47,7 +47,7 @@ see_budget() {
     echo "-----------------------------------------------------"
     echo "Expense Name | Amount | Date"
     echo "-----------------------------------------------------"
-    cat expenses.txt
+    cat expenses.csv
     echo "-----------------------------------------------------"
     # ask user if they want to add another expense, go to the main menu, or exit
     echo "What do you want to do next?"
@@ -69,7 +69,7 @@ edit_budget_settings() {
     echo "-----------------------------------------------------"
     echo "Budget Name | Amount"
     echo "-----------------------------------------------------"
-    cat budget.txt
+    cat budget.csv
     echo "-----------------------------------------------------"
 }
 
@@ -78,7 +78,7 @@ see_accounts() {
     echo "Here are your current accounts and balances:"
     echo "-----------------------------------------------------"
     echo "Account Type | Account Name | Balance"
-    cat accounts.txt
+    cat accounts.csv
     echo "-----------------------------------------------------"
     # ask user if they want to add another account or change the details of an existing account, go to the main menu, or exit
     echo "What do you want to do next?"
@@ -115,7 +115,7 @@ add_account() {
 add_credit_card() {
     read -p "Enter the nickname of the credit card: " nickname
     read -p "Enter the credit limit available for this account: " limit
-    echo "Credit Card, $nickname, $limit" >> accounts.txt
+    echo "Credit Card, $nickname, $limit" >> accounts.csv
     echo "You added Cobalt Credit Card, with a monthly spending limit of $limit to your Budgeteer!"
     # ask user if they want to add another account or change the details of an existing account, go to the main menu, or exit
     echo "What do you want to do next?"
@@ -138,7 +138,7 @@ change_account() {
     echo "Here are your current accounts and balances:"
     echo "-----------------------------------------------------"
     echo "Account Type | Account Name | Balance"
-    cat accounts.txt
+    cat accounts.csv
     echo "-----------------------------------------------------"
     read -p "Enter the nickname of the account you want to change: " nickname
     # ask user what they want to change
@@ -156,7 +156,7 @@ change_account() {
 # write a function that changes the nickname of the account
 change_nickname() {
     read -p "Enter the new nickname: " new_nickname
-    sed -i'.bak' "s/$1/$new_nickname/g" accounts.txt
+    sed -i'.bak' "s/$1/$new_nickname/g" accounts.csv
     echo "You changed the nickname of $1 to $new_nickname!"
     
     echo "What do you want to do next?"
@@ -175,7 +175,7 @@ change_nickname() {
 # write a function that changes the balance of the account
 change_balance() {
     read -p "Enter the new balance: " new_balance
-    sed -i'.bak' "s/$1/$new_balance/g" accounts.txt
+    sed -i'.bak' "s/$1/$new_balance/g" accounts.csv
     echo "You changed the balance of $1 to $new_balance!"
     echo "What do you want to do next?"
     echo "1. Change another account"
@@ -188,5 +188,9 @@ change_balance() {
         3) exit;;
         *) echo "Invalid choice" && change_account;;
     esac
+}
+# a function that tells the user about all the major tips on increasing credit score information.
+credit_score_information(){
+    echo "A line used by major credit bureaus is that you should keep credit utilization below 30%, but instead, many people have personally experienced that a credit utilization between 2$ and 9% of credit limit should be the best for your credit health."
 }
 main_menu
