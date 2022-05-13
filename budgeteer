@@ -194,4 +194,9 @@ change_balance() {
 credit_score_information(){
     echo "A line used by major credit bureaus is that you should keep credit utilization below 30%, but instead, many people have personally experienced that a credit utilization between 2$ and 9% of credit limit should be the best for your credit health."
 }
+# write a function that encrypts the csv files using gpg
+gpg_encrypt(){
+    gpg --encrypt --recipient "" 
+}
+
 main_menu
