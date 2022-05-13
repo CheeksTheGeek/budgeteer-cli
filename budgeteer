@@ -156,17 +156,37 @@ change_account() {
 # write a function that changes the nickname of the account
 change_nickname() {
     read -p "Enter the new nickname: " new_nickname
-    echo "You changed the nickname of $1 to $new_nickname!"
     sed -i'.bak' "s/$1/$new_nickname/g" accounts.txt
-    change_account
+    echo "You changed the nickname of $1 to $new_nickname!"
+    
+    echo "What do you want to do next?"
+    echo "1. Change another account"
+    echo "2. Go back to the main menu"
+    echo "3. Exit Budgeteer!"
+    read -p "Enter your choice: " choice
+    case $choice in
+        1) change_account;;
+        2) main_menu;;
+        3) exit;;
+        *) echo "Invalid choice" && change_account;;
+    esac
 }
 
 # write a function that changes the balance of the account
 change_balance() {
-    arg1=$1
     read -p "Enter the new balance: " new_balance
-    sed -i "s/$1/$new_balance/g" accounts.txt
+    sed -i'.bak' "s/$1/$new_balance/g" accounts.txt
     echo "You changed the balance of $1 to $new_balance!"
-    change_account
+    echo "What do you want to do next?"
+    echo "1. Change another account"
+    echo "2. Go back to the main menu"
+    echo "3. Exit Budgeteer!"
+    read -p "Enter your choice: " choice
+    case $choice in
+        1) change_account;;
+        2) main_menu;;
+        3) exit;;
+        *) echo "Invalid choice" && change_account;;
+    esac
 }
 main_menu
