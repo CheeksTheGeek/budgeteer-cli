@@ -156,9 +156,10 @@ change_account() {
 # write a function that changes the nickname of the account
 change_nickname() {
     read -p "Enter the new nickname: " new_nickname
-    sed -i'.bak' "s/$1/$new_nickname/g" accounts.csv
+    awk -F, "/1,$1,in_progress/new_nickname 1" accounts.csv
+    # awk -F "\"*,\"*" '{print $2}' accounts.csv
+    # sed -i'.bak' "s/$1/$new_nickname/g" accounts.csv
     echo "You changed the nickname of $1 to $new_nickname!"
-    
     echo "What do you want to do next?"
     echo "1. Change another account"
     echo "2. Go back to the main menu"
