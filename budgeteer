@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# a budgeting cli tool
 echo "Budgeteer! Another good day to track your expenses and have a stable lifestyle!"
 
 # write a function for main menu that asks the user if they want to add a new expense, see their monthly budget, or edit their budgeting information.
